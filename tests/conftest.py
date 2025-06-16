@@ -2,10 +2,11 @@ import pytest
 import requests
 import random
 import string
+from .data import BASE_URL, ORDER_DATA
 
 @pytest.fixture(scope="session")
 def base_url():
-    return "https://qa-scooter.praktikum-services.ru"
+    return BASE_URL
 
 @pytest.fixture
 def generate_courier_data():
@@ -40,15 +41,5 @@ def create_courier(base_url, generate_courier_data):
 
 @pytest.fixture
 def create_order(base_url):
-    order_data = {
-        "firstName": "Иван",
-        "lastName": "Иванов",
-        "address": "Москва, ул. Пушкина, д. 1",
-        "metroStation": 4,
-        "phone": "+7 800 355 35 35",
-        "rentTime": 5,
-        "deliveryDate": "2024-03-20",
-        "comment": "Тестовый заказ"
-    }
-    response = requests.post(f"{base_url}/api/v1/orders", json=order_data)
+    response = requests.post(f"{base_url}/api/v1/orders", json=ORDER_DATA)
     return response.json()["track"] 
